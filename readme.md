@@ -16,7 +16,7 @@ Currently, we dont have an official, external image for ND v5 MI300X.  The follo
         az vm availability-set create --name $avsetName --resource-group $rgName  --platform-fault-domain-count 1  --platform-update-domain-count 1 --location $location
         az vm create --resource-group $rgName --name $vmName --image $image --admin-username $adminUser --size $vmsku --location $location --public-ip-sku Standard --disk-controller-type scsi --os-disk-size-gb 512 --availability-set $avsetName --security-type TrustedLaunch --enable-secure-boot false --ssh-key-values $pathPub
 
-2. Configure the OS.  Currently, this uses *BKC 24.06.03*.
+2. Configure the OS.  Currently, this uses *BKC 24.05.03*.
 
         # kernel downgrade to 5.15.0-1059-azure
         sudo apt update
@@ -31,8 +31,8 @@ Currently, we dont have an official, external image for ND v5 MI300X.  The follo
         sudo reboot
         
         # device driver install 
-        tar -xvzf  ROCm-6.2-13611-BKC-ubuntu2204.tar.gz
-        cd ROCm-6.2-13611-BKC-ubuntu2204/
+        tar -xvzf  ROCm-6.1-13556-amdgpu1734616-BKC-ubuntu2204.tar
+        cd ROCm-6.1-13556-amdgpu1734616-BKC-ubuntu2204/
         chmod u+x amdgpu-install
         ./amdgpu-install --usecase=rocm
         
@@ -43,7 +43,6 @@ Currently, we dont have an official, external image for ND v5 MI300X.  The follo
         sudo reboot
          
         # load device driver
-        sudo modprobe -r ast
         sudo modprobe -r hyperv_drm
         sudo modprobe  amdgpu ip_block_mask=0x7f
         rocm-smi
