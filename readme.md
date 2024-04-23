@@ -2,21 +2,31 @@
 
 Currently, we dont have an official, external image for ND v5 MI300X.  The following instructions detail how to start a VM and configure the OS for development.
 
-1. Start the VM:
+1. Generate SSH key pair (optional):
 
-        base="mi300x_vm"
+        ssh-keygen -t rsa -b 2048 -f ~/.ssh/my-ssh-key
+
+2. Start the VM:
+
         vmsku="Standard_ND96isr_MI300X_v5"
         image="Ubuntu2204"
-        pathPub="/home/shaunpur/.ssh/id_rsa.pub"
-        adminUser="shaunpur"
-        rgName="pcue-cca-rg"
-        avsetName="avset-mi300-$base"
-        vmName="test-$base"
+        adminUser="MyUserName"
+        rgName="MyResourceGroup"
+        avsetName="MyAvSet"
+        vmName="MyVM"
+        keyPath="~/.ssh/my-ssh-key"
         location="canadacentral"
-        az vm availability-set create --name $avsetName --resource-group $rgName  --platform-fault-domain-count 1  --platform-update-domain-count 1 --location $location
-        az vm create --resource-group $rgName --name $vmName --image $image --admin-username $adminUser --size $vmsku --location $location --public-ip-sku Standard --disk-controller-type scsi --os-disk-size-gb 512 --availability-set $avsetName --security-type TrustedLaunch --enable-secure-boot false --ssh-key-values $pathPub
 
-2. Configure the OS.  Currently, this uses *BKC 24.05.03*.
+        az vm availability-set create --name $avsetName --resource-group $rgName  --platform-fault-domain-count 1  --platform-update-domain-count 1 --location $location
+        
+        az vm create --resource-group $rgName --name $vmName --image $image --admin-username $adminUser --size $vmsku --location $location --public-ip-sku Standard --disk-controller-type scsi --os-disk-size-gb 512 --availability-set $avsetName --security-type TrustedLaunch --enable-secure-boot false --ssh-key-values $keyPath.pub
+
+3. SSH to the newly created VM:
+
+        ssh -i $keyPath $adminUser@<public-ip>
+
+
+4. Configure the OS.  Currently, this uses *BKC 24.05.03*.
 
         # kernel downgrade to 5.15.0-1059-azure
         sudo apt update
