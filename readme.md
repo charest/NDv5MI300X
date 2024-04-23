@@ -16,7 +16,7 @@ Currently, we dont have an official, external image for ND v5 MI300X.  The follo
         az vm availability-set create --name $avsetName --resource-group $rgName  --platform-fault-domain-count 1  --platform-update-domain-count 1 --location $location
         az vm create --resource-group $rgName --name $vmName --image $image --admin-username $adminUser --size $vmsku --location $location --public-ip-sku Standard --disk-controller-type scsi --os-disk-size-gb 512 --availability-set $avsetName --security-type TrustedLaunch --enable-secure-boot false --ssh-key-values $pathPub
 
-2. Configure the OS:
+2. Configure the OS.  Currently, this uses *BKC 24.06.03*.
 
         # kernel downgrade to 5.15.0-1059-azure
         sudo apt update
