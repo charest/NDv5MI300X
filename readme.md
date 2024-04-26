@@ -35,8 +35,8 @@ Currently, we dont have an official, external image for ND v5 MI300X.  The follo
         sudo aptitude install linux-image-5.15.0-1059-azure
         sudo apt purge linux-headers-6.5.0-1017-azure
         sudo apt purge linux-image-6.5.0-1017-azure
-        sudo vim /etc/default/grub #GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 5.15.0-1059-azure"
-        sudo vim /etc/default/grub #GRUB_CMDLINE_LINUX="panic=0 nowatchdog msr.allow_writes=on nokaslr amdgpu.noretry=1 pci=realloc=off console=ttyS0,115200n8 video=astdrmfb video=efifb:off ibt=off"
+        sudo sed -i 's/^GRUB_DEFAULT=.*/GRUB_DEFAULT="Advanced options for Ubuntu>Ubuntu, with Linux 5.15.0-1059-azure"/' /etc/default/grub
+        sudo sed -i 's/^GRUB_CMDLINE_LINUX=.*/GRUB_CMDLINE_LINUX="panic=0 nowatchdog msr.allow_writes=on nokaslr amdgpu.noretry=1 pci=realloc=off console=ttyS0,115200n8 video=astdrmfb video=efifb:off ibt=off"/' /etc/default/grub
         sudo update-grub
         sudo reboot
         
