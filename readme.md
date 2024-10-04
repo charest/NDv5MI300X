@@ -12,14 +12,13 @@ Currently, we dont have an official, external image for ND v5 MI300X.  The follo
         image="Ubuntu2204"
         adminUser="MyUserName"
         rgName="MyResourceGroup"
-        avsetName="MyAvSet"
         vmName="MyVM"
         keyPath="~/.ssh/my-ssh-key"
         location="canadacentral"
 
-        az vm availability-set create --name $avsetName --resource-group $rgName  --platform-fault-domain-count 1  --platform-update-domain-count 1 --location $location
+        az group create --name $rgName --location $location
         
-        az vm create --resource-group $rgName --name $vmName --image $image --admin-username $adminUser --size $vmsku --location $location --public-ip-sku Standard --disk-controller-type scsi --os-disk-size-gb 512 --availability-set $avsetName --security-type TrustedLaunch --enable-secure-boot false --ssh-key-values $keyPath.pub
+        az vm create --resource-group $rgName --name $vmName --image $image --admin-username $adminUser --size $vmsku --location $location --public-ip-sku Standard --disk-controller-type scsi --os-disk-size-gb 512  --security-type TrustedLaunch --enable-secure-boot false --ssh-key-values $keyPath.pub
 
 3. SSH to the newly created VM:
 
@@ -40,11 +39,10 @@ Currently, we dont have an official, external image for ND v5 MI300X.  The follo
         sudo update-grub
         sudo reboot
         
-        # device driver install 
-        tar -xvzf  ROCm-6.1-13556-amdgpu1734616-BKC-ubuntu2204.tar
-        cd ROCm-6.1-13556-amdgpu1734616-BKC-ubuntu2204/
-        chmod u+x amdgpu-install
-        ./amdgpu-install --usecase=rocm
+        # device driver install: https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/amdgpu-install.html
+        wget https://repo.radeon.com/amdgpu-install/6.2.2/ubuntu/noble/amdgpu-install_6.2.60202-1_all.deb
+sudo apt install ./amdgpu-install_6.2.60202-1_all.deb
+        amdgpu-install --usecase=rocm
         
         echo "blacklist amdgpu" |sudo tee -a /etc/modprobe.d/amdgpu.conf
         sudo update-initramfs -u -k all
