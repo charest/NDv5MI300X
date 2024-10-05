@@ -25,7 +25,7 @@ Currently, we dont have an official, external image for ND v5 MI300X.  The follo
         ssh -i $keyPath $adminUser@<public-ip>
 
 
-4. Configure the OS.  Currently, this uses *BKC 24.05.03*.
+4. Configure the OS.
 
         # kernel downgrade to 5.15.0-1059-azure
         sudo apt update
@@ -41,7 +41,7 @@ Currently, we dont have an official, external image for ND v5 MI300X.  The follo
         
         # device driver install: https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/amdgpu-install.html
         wget https://repo.radeon.com/amdgpu-install/6.2.2/ubuntu/noble/amdgpu-install_6.2.60202-1_all.deb
-sudo apt install ./amdgpu-install_6.2.60202-1_all.deb
+        sudo apt install ./amdgpu-install_6.2.60202-1_all.deb
         amdgpu-install --usecase=rocm
         
         echo "blacklist amdgpu" |sudo tee -a /etc/modprobe.d/amdgpu.conf
