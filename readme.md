@@ -25,9 +25,9 @@ Currently, we dont have an official, external image for ND v5 MI300X.  The follo
         ssh -i $keyPath $adminUser@<public-ip>
 
 
-4. Configure the OS.
+4. Configure the OS.  ROCm currently supports Linux kernel to version 5.15 on Ubuntu 22.04.  You are required to downgrade the kernel.
 
-        # kernel downgrade to 5.15.0-XXXX-azure kernel
+        # kernel downgrade to 5.15.0-XXXX-azure kernel - REQUIRED
         sudo apt install -y linux-headers-5.15.0-1073-azure
         sudo apt install -y linux-image-5.15.0-1073-azure
         # upgrade the default grub menu option.  Note: the HASH is tied to the kernel revision count, i.e. XXXX in 5.15.0-XXXX-azure.  It can be found in /boot/grub/grub.cfg
